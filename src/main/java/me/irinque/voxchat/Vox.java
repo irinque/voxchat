@@ -3,13 +3,22 @@ package me.irinque.voxchat;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Vox extends JavaPlugin {
+    public static Vox instance;
+
     @Override
     public void onEnable() {
-        // Feature components are registered as they are restored.
+        instance = this;
+        saveDefaultConfig();
+
+        getLogger().info("[VoxChat] Plugin is ready");
     }
 
     @Override
     public void onDisable() {
-        // No external resources are held by the bootstrap yet.
+        if (instance == this) {
+            instance = null;
+        }
+
+        getLogger().info("[VoxChat] Plugin is off");
     }
 }
