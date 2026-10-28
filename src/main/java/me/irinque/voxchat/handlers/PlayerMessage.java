@@ -25,21 +25,51 @@ public class PlayerMessage implements Listener {
     public void onPlayerMessage(AsyncPlayerChatEvent event) {
         String playerMessage = event.getMessage();
         ChatSettings chatSettings = vox.getChatSettings();
+        boolean isGlobalChat = playerMessage.startsWith("!") && chatSettings.globalChatEnabled();
 
-        if (playerMessage.startsWith("!") || !chatSettings.localChatEnabled()) {
+        if (!isGlobalChat && (playerMessage.startsWith("!") || !chatSettings.localChatEnabled())) {
             return;
         }
 
         event.setCancelled(true);
 
         UUID playerId = event.getPlayer().getUniqueId();
-        Runnable sendMessage = () -> sendLocalMessage(playerId, playerMessage, chatSettings);
+        String message = isGlobalChat ? playerMessage.substring(1) : playerMessage;
+        Runnable sendMessage = isGlobalChat
+                ? () -> sendGlobalMessage(playerId, message, chatSettings)
+                : () -> sendLocalMessage(playerId, message, chatSettings);
 
         if (event.isAsynchronous()) {
             vox.getServer().getScheduler().runTask(vox, sendMessage);
         } else {
             sendMessage.run();
         }
+    }
+
+    private void sendGlobalMessage(UUID playerId, String playerMessage, ChatSettings chatSettings) {
+        Player playerSender = vox.getServer().getPlayer(playerId);
+
+        if (playerSender == null) {
+            return;
+        }
+
+        String worldPrefix = getWorldPrefix(playerSender.getWorld(), chatSettings.globalChatSign());
+        String message = chatSettings.globalChatMessage()
+                .replace("{world_prefix}", worldPrefix)
+                .replace("{player}", playerSender.getDisplayName())
+                .replace("{message}", playerMessage);
+
+        for (Player playerReceiver : vox.getServer().getOnlinePlayers()) {
+            playerReceiver.sendMessage(message);
+        }
+    }
+
+    private String getWorldPrefix(World world, String sign) {
+        return switch (world.getEnvironment()) {
+            case NETHER -> "§c" + sign;
+            case THE_END -> "§d" + sign;
+            default -> "§a" + sign;
+        };
     }
 
     private void sendLocalMessage(UUID playerId, String playerMessage, ChatSettings chatSettings) {
