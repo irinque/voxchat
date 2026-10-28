@@ -11,4 +11,5 @@ commands:
     aliases: [vox, vc]
   message:
     description: "Private message."
+    usage: "/message <player> <message>"
     aliases: [msg, tell, w, tellraw]
