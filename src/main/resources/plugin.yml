@@ -8,8 +8,14 @@ authors: [ irinque ]
 commands:
   voxchat:
     description: "Main command."
+    usage: "/voxchat reload"
     aliases: [vox, vc]
   message:
     description: "Private message."
     usage: "/message <player> <message>"
     aliases: [msg, tell, w, tellraw]
+
+permissions:
+  voxchat.reload:
+    description: "Allows reloading the VoxChat configuration."
+    default: op
