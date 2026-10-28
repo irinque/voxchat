@@ -1,5 +1,14 @@
-name: voxchat
-version: '${version}'
+name: vox-chat
+version: '${project.version}'
 
-main: irinque.voxchat.Main
-api-version: '26.1'
+main: me.irinque.voxchat.Vox
+api-version: '1.19'
+authors: [ irinque ]
+
+commands:
+  voxchat:
+    description: "Main command."
+    aliases: [vox, vc]
+  message:
+    description: "Private message."
+    aliases: [msg, tell, w, tellraw]
