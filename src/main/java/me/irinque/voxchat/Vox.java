@@ -1,6 +1,8 @@
 package me.irinque.voxchat;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import me.irinque.voxchat.handlers.PlayerJoin;
+import me.irinque.voxchat.handlers.PlayerQuit;
 
 public final class Vox extends JavaPlugin {
     public static Vox instance;
@@ -9,6 +11,9 @@ public final class Vox extends JavaPlugin {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
+
+        getServer().getPluginManager().registerEvents(new PlayerJoin(), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuit(), this);
 
         getLogger().info("[VoxChat] Plugin is ready");
     }
