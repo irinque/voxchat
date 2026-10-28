@@ -1,0 +1,38 @@
+# Chat messages can use Minecraft color codes with the § symbol.
+
+join:
+  enable: true
+  message: '§a[+] §f{player}'
+
+quit:
+  enable: true
+  message: '§c[-] §f{player}'
+
+death:
+  enable: true
+  sign: '[☠]'
+  message: '{sign} {player} {default_message}'
+
+private-message:
+  enable: true
+  sign: '[✉]'
+  template-receiver: '§b{sign} {sender} >> {message}'
+  template-sender: '§b{sign} {sender} -> {receiver} >> {message}'
+  sound: true
+
+global-chat:
+  enable: true
+  sign: '●'
+  message: '{world_prefix} §f{player} >> {message}'
+
+local-chat:
+  enable: true
+  radius: 50
+  message: '§7{player} >> {message}'
+
+message:
+  noReceivers: '§eYour message was not seen by anyone.'
+  pluginReloaded: '§aThe plugin was successfully reloaded.'
+  permissionError: '§4You do not have permission to use this command.'
+  emptyMessage: '§eUnable to send an empty message.'
+  receiverIsOffline: '§eThe player with this nickname is not online.'
