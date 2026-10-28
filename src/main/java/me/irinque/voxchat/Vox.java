@@ -1,6 +1,7 @@
 package me.irinque.voxchat;
 
 import me.irinque.voxchat.commands.Message;
+import me.irinque.voxchat.commands.VoxChat;
 import me.irinque.voxchat.config.ChatSettings;
 import me.irinque.voxchat.handlers.PlayerDeath;
 import me.irinque.voxchat.handlers.PlayerJoin;
@@ -26,6 +27,7 @@ public final class Vox extends JavaPlugin {
 
         getCommand("message").setExecutor(new Message(this));
         getCommand("message").setTabCompleter(new MessageTabCompleter(this));
+        getCommand("voxchat").setExecutor(new VoxChat(this));
 
         getLogger().info("[VoxChat] Plugin is ready");
     }
