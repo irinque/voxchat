@@ -1,0 +1,5 @@
+name: voxchat
+version: '${version}'
+
+main: irinque.voxchat.Main
+api-version: '26.1'
